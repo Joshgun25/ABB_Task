@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Page</title>
+</head>
+<body>
+    <h1>Welcome to the Menu Page</h1>
+    <ul>
+        <li><a href="{% url 'scrape_data' %}">Scrape ABB website</a></li>
+        <li><a href="{% url 'data_upload' %}">Upload New File</a></li>
+        <li><a href="{% url 'chat_bot' %}">ABB ChatBot</a></li>
+        <li><a href="{% url 'frequently_asked' %}">Frequently Asked Questions Chart</a></li>
+        <li><a href="{% url 'length' %}">Length of Questions and Answers Chart</a></li>
+        <li><a href="{% url 'time_series' %}">Questions Time Series Chart</a></li>
+        <li><a href="{% url 'word_cloud' %}">Questions World Cloud Chart</a></li>
+    </ul>
+</body>
+</html>

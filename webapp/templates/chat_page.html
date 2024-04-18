@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat with ABB Bank</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Chat container */
+        .chat-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        /* Chat history */
+        .chat-history {
+            margin-bottom: 20px;
+            overflow-y: auto;
+            max-height: 300px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Chat input form */
+        .chat-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .chat-submit {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chat-submit:hover {
+            background-color: #2980b9;
+        }
+
+        /* Styles for the progress spinner */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none; /* Initially hidden */
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Chat with ABB Bank</h1>
+        <div class="chat-history" id="chat-history"></div>
+        <form class="chat-form" id="question-form">
+            <input type="text" class="chat-input" id="question-input" placeholder="Ask your question...">
+            <button type="submit" class="chat-submit" id="submit-btn">Send</button>
+            <div class="loader"></div> <!-- Progress spinner -->
+        </form>
+        <br>
+        <a href="{% url 'menu' %}">Back to Menu</a>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#question-form').submit(function (event) {
+                event.preventDefault();
+                var question = $('#question-input').val();
+                $('.loader').show(); // Show the progress spinner
+                $('#question-input, #submit-btn').prop('disabled', true); // Disable text input and submit button
+                $.ajax({
+                    method: 'POST',
+                    url: '../chat_bot/',
+                    data: {
+                        'question': question,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        $('#chat-history').append('<p><strong>You:</strong> ' + question + '</p>');
+                        $('#chat-history').append('<p><strong>ABB Bank:</strong> ' + data.answer + '</p>');
+                        $('#question-input').val('');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    },
+                    complete: function () {
+                        $('.loader').hide(); // Hide the progress spinner when request is complete
+                        $('#question-input, #submit-btn').prop('disabled', false); // Enable text input and submit button
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

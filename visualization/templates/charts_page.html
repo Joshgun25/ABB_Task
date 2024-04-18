@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plotly Chart</title>
+    <!-- Include Plotly CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <!-- Container for the Plotly chart -->
+    <div id="chart-container"></div>
+
+    <script>
+        // Parse the JSON data returned from the Django view
+        var chartData = JSON.parse('{{ chart_json|escapejs }}');
+
+        // Render the Plotly chart using the parsed data
+        Plotly.newPlot('chart-container', chartData.data, chartData.layout);
+    </script>
+    <a href="{% url 'menu' %}">Back to Menu</a>
+</body>
+</html>

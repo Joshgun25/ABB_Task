@@ -1,0 +1,21 @@
+version: '4.28'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=railway  # Change to your database name
+      - POSTGRES_USER=postgres  # Change to your database username
+      - POSTGRES_PASSWORD=yeGAMAjBuJIbApwgbYziYqRXcGrEuKsx  # Change to your database password
+    ports:
+      - "40117:40117"  # Change to your Railway port

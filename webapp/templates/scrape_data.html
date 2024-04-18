@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scrape Data</title>
+</head>
+<body>
+    <h1>Scrape Data</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Scrape</button>
+    </form>
+    <a href="{% url 'menu' %}">Back to Menu</a>
+</body>
+</html>
