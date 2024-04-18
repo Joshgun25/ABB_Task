@@ -7,7 +7,7 @@ This is a Django-based chat application for interacting with Bank. It allows use
 1. Clone the repository:
 
     ```bash
-    git clone [https://github.com/Joshgun25/ABB_Task.git]
+    git clone https://github.com/Joshgun25/ABB_Task.git
     ```
 
 2. Navigate to the project directory:
